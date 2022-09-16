@@ -1,15 +1,31 @@
 package com.android.work.demoset.provider
 
 import android.content.ContentValues
+import android.database.ContentObserver
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.android.work.demoset.App
 import com.android.work.demoset.data.UserInfo
 import com.android.work.demoset.sqlite.SqliteOperateHelper
 import com.android.work.demoset.sqlite.USER_TAB
 
-object ContentResolverHelper {
+object ContentResolverHelper{
     private const val TAG = "DemoSet_ContentResolverHelper"
+
+    fun registerContentObserver(uri: String,observer:ContentObserver){
+        App.getAppContext()?.let {
+            it.contentResolver.registerContentObserver(Uri.parse(uri),true,observer)
+        }
+    }
+
+    fun unregisterContentObserver(observer: ContentObserver){
+        App.getAppContext()?.let{
+            it.contentResolver.unregisterContentObserver(observer)
+        }
+    }
 
     fun insert(uri: String, values: ContentValues): Uri? {
         App.getAppContext()?.let {

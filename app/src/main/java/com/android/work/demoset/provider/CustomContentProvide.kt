@@ -6,8 +6,8 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import android.provider.ContactsContract
 import android.util.Log
+import com.android.work.demoset.App
 import com.android.work.demoset.sqlite.SqliteOperateHelper
 import com.android.work.demoset.sqlite.USER_TAB
 
@@ -65,8 +65,8 @@ class CustomContentProvide : ContentProvider() {
                     return uri
                 }
                 val newUri = ContentUris.withAppendedId(uri, rowId)
-//                App.getAppContext()?.contentResolver?.notifyChange(newUri,ContentObserver())
                 Log.d(TAG, "insert newUri:$newUri")
+                App.getAppContext()?.contentResolver?.notifyChange(newUri, null)
             }
         }
         return uri
@@ -76,10 +76,14 @@ class CustomContentProvide : ContentProvider() {
         val id = mUriMatcher.match(uri)
         Log.d(TAG,"delete id:$id")
         return when (id) {
-            1 -> SqliteOperateHelper.delete(
-                whereArgs = selectionArgs, whereClause = selection,
-                USER_TAB
-            ) ?: -1
+            1 -> {
+                val rowId = SqliteOperateHelper.delete(
+                    whereArgs = selectionArgs, whereClause = selection,
+                    USER_TAB
+                ) ?: -1
+                App.getAppContext()?.contentResolver?.notifyChange(uri, null)
+                rowId
+            }
             else -> -1
         }
     }
@@ -93,12 +97,16 @@ class CustomContentProvide : ContentProvider() {
         val id = mUriMatcher.match(uri)
         Log.d(TAG,"delete id:$id")
         return when (id) {
-            1 -> SqliteOperateHelper.update(
-                values,
-                USER_TAB,
-                whereClause = selection,
-                whereArgs = selectionArgs
-            ) ?: -1
+            1 -> {
+                val rowId = SqliteOperateHelper.update(
+                    values,
+                    USER_TAB,
+                    whereClause = selection,
+                    whereArgs = selectionArgs
+                ) ?: -1
+                App.getAppContext()?.contentResolver?.notifyChange(uri, null)
+                rowId
+            }
             else -> -1
         }
     }

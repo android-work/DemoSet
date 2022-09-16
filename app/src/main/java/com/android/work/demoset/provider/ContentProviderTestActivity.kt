@@ -2,6 +2,9 @@ package com.android.work.demoset.provider
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,11 +14,22 @@ import com.android.work.demoset.sqlite.*
 
 class ContentProviderTestActivity : AppCompatActivity() {
     private val TAG = "DemoSet_ContentProviderTestActivity"
+    private val mCustomContentObserver = CustomContentObserver(object: Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            Log.d(TAG,"内容变化，通知")
+        }
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_provider_layout)
+        ContentResolverHelper.registerContentObserver(CustomContentProvide.mURI,mCustomContentObserver)
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        ContentResolverHelper.unregisterContentObserver(mCustomContentObserver)
     }
 
     fun insert(view: View) {
