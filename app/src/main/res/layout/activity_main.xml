@@ -8,4 +8,14 @@
         android:layout_height="wrap_content"
         android:text="内容提供者测试"
         android:onClick="contentProvider"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="全局异常捕获"
+        android:onClick="uncaughtExceptionHandler"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义热修复"
+        android:onClick="hotFix"/>
 </LinearLayout>
