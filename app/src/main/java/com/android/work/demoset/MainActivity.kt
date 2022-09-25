@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.android.work.demoset.hook.HookUtil
 import com.android.work.demoset.hot_fix.HotFixTest
 import com.android.work.demoset.provider.ContentProviderTestActivity
 
@@ -26,6 +27,11 @@ class MainActivity : AppCompatActivity() {
 
     fun hotFix(view: android.view.View) {
         HotFixTest().hotFix()
+    }
+
+    fun hook(view: android.view.View) {
+        HookUtil.hook(this)
+        startActivity(Intent(this,ContentProviderTestActivity::class.java))
     }
 
 

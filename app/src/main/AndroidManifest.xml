@@ -24,6 +24,8 @@
 
         <activity android:name=".provider.ContentProviderTestActivity"/>
 
+        <activity android:name=".hook.HookActivity"/>
+
         <provider
             android:authorities="com.android.work.demoset.provider.CustomContentProvide"
             android:name=".provider.CustomContentProvide"

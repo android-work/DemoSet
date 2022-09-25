@@ -18,8 +18,9 @@ class App:Application() {
     override fun onCreate() {
         super.onCreate()
         mContext = this
+        // 设置全局异常捕获
         Thread.setDefaultUncaughtExceptionHandler(GlobleTryCache.getInstance(this))
-
+        // 自定义热更新异常
         try {
             HotFixUtil.findDex(this)
         }catch (e:Exception){
