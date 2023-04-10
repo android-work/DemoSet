@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
 
-    <TextView
-        android:layout_gravity="center"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="@string/hook_hint"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:src="@mipmap/ic_launcher"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试布局黑白化，通过hook WindowManagerGlobal内部的views，对里面对view进行操作"
+        android:textSize="13sp"
+        android:textColor="#ffaacc"
+        android:background="#BF293F"
+        android:padding="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="在application的onCreate中设置全局设置，在当前页面设置不黑白，则会在取消页面的黑白化"
+        android:textSize="13sp"
+        android:textColor="#AAC9FF"
+        android:background="#BF293F"
+        android:padding="10dp"/>
+
+</LinearLayout>
+

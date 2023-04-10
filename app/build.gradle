@@ -1,7 +1,11 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
+
+apply from: "test.gradle"
+//apply from: "groovy.gradle"
 
 android {
     compileSdk 31
@@ -16,6 +20,17 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+//    sourceSets {
+//        main {
+//            java {
+//                srcDirs = [
+//                        'src/main/java',
+//                        'src/main/bluetooth'
+//                ]
+//            }
+//        }
+//    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -23,14 +38,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
-    compileSdkVersion 31
-    buildToolsVersion '30.0.3'
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -40,10 +57,21 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.code.gson:gson:2.9.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+//    implementation project(path: ':aidlmodel')
+    implementation project(path: ':network')
+    implementation project(path: ':aidlmodel')
+    implementation project(path: ':bluetooth')
 
-    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
-    implementation 'com.squareup.okio:okio:1.12.0'
+    implementation 'androidx.room:room-runtime:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
+}
+
+configurations {
+    cleanedAnotations
+    implementation.exclude group: 'com.intellij', module: 'annotations'
+}
+
+def isTest = hasProperty("isTest")
+if (isTest instanceof Boolean && isTest) {
+    println("通过 \"./gradlew assembleDebug -P[参数名=值]\" 命令打包，在build.gradle中可以接收，hasProperty([参数名])")
 }

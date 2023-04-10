@@ -4,27 +4,62 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="内容提供者测试"
-            android:onClick="contentProvider"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="全局异常捕获"
-            android:onClick="uncaughtExceptionHandler"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="自定义热修复"
-            android:onClick="hotFix"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="hook"
-            android:onClick="hook"/>
-    </LinearLayout>
-</ScrollView>
+        android:layout_height="wrap_content"
+        android:text="内容提供者测试"
+        android:onClick="contentProvider"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="aidl测试"
+        android:onClick="aidlTest"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设计模式"
+        android:onClick="designPatternTest"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="hook黑白化"
+        android:onClick="hookBlackWhite"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="room测试"
+        android:onClick="roomTest"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="activity结果返回"
+        android:onClick="activityResult"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="权限申请"
+        android:onClick="permissionRequest"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="webView"
+        android:onClick="web"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="蓝牙测试"
+        android:onClick="blueTest"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="热修复"
+        android:onClick="hotFix"/>
+
+</LinearLayout>

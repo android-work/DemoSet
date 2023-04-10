@@ -1,0 +1,119 @@
+def testClosure(Closure closure){
+    println closure()
+}
+testClosure{
+    "testClosure是一种闭包的定义方式,也可以说是一个Closure类型，可以联想kotlin中的lambda表达式， ⚠️ Closure 不可导Android下的包\n"
+}
+
+def myClosure = { param ->
+    param + 1
+}
+println("myClosure:${myClosure(1)}\n")
+
+// 字符串
+String str = 'string'
+println "字符串：$str\n"
+
+// 数字
+byte b = 1
+short s = 2
+long l = 3
+int i = 4
+char c = 1 // ascil码值对应相应的字符
+println "byte：$b   short：$s   long：$l    int：$i    char：$c\n"
+
+// boolean类型
+boolean bool = false
+println "boolean类型:$bool\n"
+
+// 变量
+def d = "def"
+testClosure{
+    "groovy提供了def关键字，可用于类型推断，类比到kotlin中就是val、var，通过def声明的变量，是可以赋值与之前类型不匹配的值 $d"
+}
+
+// 运算 支持 + - * /
+testClosure{
+    "1 + 1 = ${1 + 1}"
+}
+testClosure{
+    "2 - 1 = ${2 - 1}"
+}
+testClosure{
+    "2 * 1 = ${2 * 1}"
+}
+
+testClosure{
+    "2 / 1 = ${2 / 1}"
+}
+testClosure{
+    "支持一元运算++i=${++i},l+=2=${l+=2}\n"
+}
+
+// 逻辑运算
+testClosure{
+    "支持 ! || &&\n"
+}
+
+// 位运算
+testClosure{
+    "支持位运算 左移：<<  右移：>>    8 >> 2 = ${8>>2} , 2 << 3 = ${2<<3}    左移1位=>n * 2的1次方，以此类推； 右移一位 => n / 2的一次方，以此类推\n"
+}
+
+// list
+testClosure{
+    "groovy使用[]表示列表，使用逗号隔开，可以存放同类型也可存放不同类型，具体使用与java差不多 " +
+            "\n迭代使用each、eachWithIndex，each类似于for-each，eachWithIndex是可以输出index的for-each\n"
+}
+
+// Arrays
+testClosure{
+    "作用跟list相似，不一样的是，声明时必须指明元素类型 String[] a = []\n"
+}
+
+// Map
+testClosure{
+    "map也是通过[]声明，但是里面的元素是key:value形式，以逗号隔开；[a:b,c:d]\n"
+}
+
+// io
+testClosure{
+    "读取文件，并打印每一行文本,new File(\"/Users/mr.liu/Documents/Projects/Own_Project/android/DemoSet/app/groovy.gradle\").eachLine{}" +
+            "\n或者通过流读取:new File(\"path\").withInputStream{InputStream it -> 获取流对象，亦可读取文件}" +
+            "\n============================================================以下为文件中的内容=============================================================="
+}
+new File("/Users/mr.liu/Documents/Projects/Own_Project/android/DemoSet/app/groovy.gradle").eachLine{
+    println it
+}
+testClosure{
+    "写文件，通过new File(\"path\").withWriter(\"字符编码如utf-8\"){writer -> writer.writerLine \'aaaaaa\'}" +
+            "\n或者通过流写入：new File(\"path\").withOutputStream{OutputStream it -> 通过输出流进行写操作}" +
+            "\n⚠️ 二者都会覆盖源文件中的内容\n"
+}
+/*new File("/Users/mr.liu/Documents/Projects/Own_Project/android/DemoSet/app/groovy.gradle").withWriter("utf-8"){
+    it.write("testClosure{\"我是通过file write写入的数据\"}")
+    it.writeLine("testClosure{\"我是通过file writeLine写入的数据\"}")
+}*/
+
+
+// gradle生命周期
+testClosure{
+    "gradle生命周期分为三部分：Initialization（初始化）、Configuration（配置）、Execution（执行）" +
+            "\nInitialization：在该阶段，gradle会决定构建中包含哪些项目，会为每个项目创建Project实例，为了决定会构建哪些项目，首先会去访问setting.gradle决定是构建单项目还是多项目，单项目就是一个moduel，多项目是project+app+moduel1..." +
+            "\nConfiguration：gradle会评估构建项目中包含的所有构建脚本，随后应用插件、使用DSL配置构建，并在最后注册Task" +
+            "\nExecution：gradle会执行构建所需的task集合"
+}
+
+
+task count () {
+    println "使用断言assert和instanceof判断对象是否一致，不一致会报错，一致返回null：${assert d instanceof String}\n"
+
+    println "⚠️ 1..5 = ${1..5}，其实是定一个1-5的int数组\n"
+
+    def isTest = hasProperty("isTest")
+    if (isTest instanceof Boolean && isTest){
+        println("通过 \"./gradlew assembleDebug -P[参数名=值]\" 命令打包，在build.gradle中可以接收，hasProperty([参数名])")
+    }
+}
+
+println "=======================================================以上为文件中的内容================================================================="

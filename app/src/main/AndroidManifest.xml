@@ -3,6 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.work.demoset">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -20,16 +31,81 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!--短链拉起-->
+            <!--<intent-filter
+                tools:ignore="AppLinkUrlError"
+                android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="demoset" />
+            </intent-filter>-->
+
         </activity>
 
-        <activity android:name=".provider.ContentProviderTestActivity"/>
+        <activity android:name=".provider.ContentProviderTestActivity" />
+
+        <activity android:name="com.android.work.demoset.plc.aidl.AidlDemoActivity" />
+
+        <activity android:name=".plc.PLCDemoActivity" />
+
+        <activity android:name=".plc.parcel.ParcelDemoActivity" />
+
+        <activity android:name=".plc.messenger.MessengerActivity" />
+
+        <activity android:name=".design.DesignPatternActivity" />
+
+        <activity android:name=".hook.TestHookActivity" />
+
+        <activity android:name=".databases.room.RoomActivity" />
+
+        <activity android:name=".result.StartActivity1" />
+
+        <activity android:name=".result.StartActivity2" />
+
+        <activity android:name=".result.StartActivity3" />
+
+        <activity android:name=".permission.PermissionActivity" />
+
+        <activity android:name=".web.WebActivity" />
+
+        <activity android:name="BlueActivity"/>
+
+        <activity android:name=".deep.DeepLinkActivity"
+            android:exported="true">
+            <!--短链拉起-->
+            <intent-filter
+                tools:ignore="AppLinkUrlError"
+                android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="demoset" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".plc.messenger.service.MessengerService"
+            android:exported="true"
+            android:process=":MessengerService" />
 
         <activity android:name=".hook.HookActivity"/>
 
         <provider
             android:authorities="com.android.work.demoset.provider.CustomContentProvide"
             android:name=".provider.CustomContentProvide"
-            android:exported="true"/>
+            android:exported="true" />
+
+        <!--        <provider-->
+        <!--            android:authorities="com.android.work.demoset.fileProvider"-->
+        <!--            android:name="androidx.core.content.FileProvider"/>-->
+
     </application>
+
 
 </manifest>

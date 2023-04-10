@@ -11,7 +11,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/aidlmodel" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/bluetooth" />
+            <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/widgetmodel" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
