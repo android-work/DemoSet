@@ -26,6 +26,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import com.android.work.bluetooth.R as r
 
+
 class MainActivity : AppCompatActivity() {
 
     /**
@@ -103,6 +104,7 @@ class MainActivity : AppCompatActivity() {
          *      5、结束xml布局解析后，返回layout，如果inflate传入的root!=null 或 attachParent == true;则会将layout以父布局参数添加到root中；否则直接返回layout
          */
         setContentView(R.layout.activity_main)
+    }
 
         findViewById<RecyclerView>(r.id.rv)
 
@@ -135,6 +137,8 @@ class MainActivity : AppCompatActivity() {
 
         test()
 
+    fun hotFix(view: android.view.View) {
+        HotFixTest().hotFix()
     }
 
     private fun getH5JumpParams() {
@@ -400,5 +404,6 @@ class MainActivity : AppCompatActivity() {
     fun hotFix(view: View) {
         HotFixTest().hotFix()
     }
+
 
 }

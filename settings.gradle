@@ -1,3 +1,4 @@
+
 /**
  * 在settings.gradle脚本执行是在initialization阶段，在init.gradle执行完毕后，就创建了gradle对象,
  * 所以在settings.gradle脚本中，我们可以随意使用gradle对象，与此同时，settings.gradle也是我们做全局hook的地方。
@@ -12,6 +13,7 @@ pluginManagement {
         mavenCentral()
     }
 }
+
 dependencyResolutionManagement {
     /**
      * PREFER_PROJECT：优先使用build.gradle中repositories{}，忽略settings.gradle中的repositories{}
@@ -25,7 +27,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
         maven { url 'https://jitpack.io' }
+
     }
 }
 
