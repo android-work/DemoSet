@@ -1,3 +1,10 @@
+/**
+ * 在settings.gradle脚本执行是在initialization阶段，在init.gradle执行完毕后，就创建了gradle对象,
+ * 所以在settings.gradle脚本中，我们可以随意使用gradle对象，与此同时，settings.gradle也是我们做全局hook的地方。
+ * 当settings.gradle脚本执行完后，Setting对象才可以被我们使用，在settings.gradle执行过程中，会将所有子项目的project创建。
+ */
+
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -6,11 +13,95 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
+    /**
+     * PREFER_PROJECT：优先使用build.gradle中repositories{}，忽略settings.gradle中的repositories{}
+     * PREFER_SETTINGS：优先使用settings.gradle中repositories{}，忽略build.gradle中的repositories{}
+     * FAIL_ON_PROJECT_REPOS：在build.gradle中声明repositories{}会导致编译错误
+     *
+     * 优化编译速度：如果只有app模块可以将仓库地址写入dependencyResolutionManagement->repositories；如果存在多个模块，
+     * 且各模块相互独立，则建议将仓库地址分开写，毕竟从仓库中找依赖比较耗时
+     */
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
+
+// Initialization Hook
+gradle.settingsEvaluated {
+    println("----gradle settingsEvaluated Settings对象评估完毕")
+}
+
+// settingsEvaluated 执行完毕后是 projectsLoaded
+gradle.projectsLoaded {
+    println("----gradle projectsLoaded 准备加载project对象")
+}
+
+// projectsLoaded执行完毕后，已经根据settings.gradle构建了各module的project对象，我们可以引用project对象
+gradle.allprojects{
+
+    // gradle.allprojects的方法体属于Initialization时机
+    println("----gradle.allprojects project:$it  ---> gradle.allprojects的方法体属于Initialization时机")
+
+    beforeEvaluate {
+        // beforeEvaluate 方法体执行的时机属于Configuration时机
+        println("----gradle beforeEvaluate name:${it.getName()}  ---> beforeEvaluate 方法体执行的时机属于Configuration时机")
+    }
+    afterEvaluate {
+        // afterEvaluate 方法体执行的时机属于Configuration时机
+        println("----gradle afterEvaluate name:${it.getName()}  ---> afterEvaluate 方法体执行的时机属于Configuration时机")
+    }
+}
+
+// 所有project对象evaluate完毕之后，会回调gradle.projectsEvaluated
+gradle.projectsEvaluated {
+    println("----gradle projectsEvaluated  ----> 所有project对象evaluate完毕之后，会回调gradle.projectsEvaluated")
+}
+
+// Execution Hook gradle会在Execution阶段执行task，我们可以通过注册TaskExecutionListener来Hook task的执行;⚠️ 7.3之后被废弃
+/*gradle.addBuildListener(new TaskExecutionListener(){
+
+    @Override
+    void beforeExecute(Task task) {
+        println("----gradle beforeExecute task:${task.name}")
+    }
+
+    @Override
+    void afterExecute(Task task, TaskState taskState) {
+        println("----gradle afterExecute task:${task.name}  taskState:${taskState.skipMessage}")
+    }
+})*/
+
+// Execution Hook gradle会在Execution阶段执行task，我们可以通过注册BuildListener来Hook task的执行
+gradle.addListener(new BuildListener() {
+    @Override
+    void settingsEvaluated(Settings settings) {
+        println("----gralde addListener settingsEvaluated")
+    }
+
+    @Override
+    void projectsLoaded(Gradle gradle) {
+        println("----gralde addListener projectsLoaded gradle:${gradle.gradleVersion}   rootProject:${gradle.rootProject.name}")
+    }
+
+    @Override
+    void projectsEvaluated(Gradle gradle) {
+        gradle.allprojects{
+            println("----gralde addListener projectsEvaluated gradle project:${it.name}")
+        }
+    }
+
+    @Override
+    void buildFinished(BuildResult buildResult) {
+        println("----gralde addListener buildFinished buildResult:${buildResult.action}")
+    }
+})
+
 rootProject.name = "DemoSet"
 include ':app'
+include ':aidlmodel'
+include ':widgetmodel'
+include ':network'
+include ':bluetooth'

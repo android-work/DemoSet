@@ -1,0 +1,8 @@
+
+class MyTask extends DefaultTask{
+    @TaskAction
+    void action(){
+        String a = 'hao nan s'
+        println a
+    }
+}

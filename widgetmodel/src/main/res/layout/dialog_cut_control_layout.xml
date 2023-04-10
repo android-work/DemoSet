@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.work.widgetmodel.widget.GongGeWidget xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:background="#ffaacc"
+    app:column="@integer/int_4"
+    app:direction="between"
+    app:horizontalSpace="5dp"
+    app:verticalSpace="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#D83C7A"
+        android:id="@+id/cutOrientation"
+        android:padding="5dp"
+        android:text="切换orientation"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:id="@+id/addRow"
+        android:text="增加行数"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#3A1C28"
+        android:id="@+id/addColumn"
+        android:padding="5dp"
+        android:text="增加列数"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#1C48A1"
+        android:id="@+id/cutDirection"
+        android:padding="5dp"
+        android:text="切换direction"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#247A3D"
+        android:id="@+id/addHorizonSpace"
+        android:padding="5dp"
+        android:text="增加横向间距"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#BC7824"
+        android:id="@+id/reduceHorizonSpace"
+        android:padding="5dp"
+        android:text="减小横向间距"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#DFB125"
+        android:id="@+id/addVerticalSpace"
+        android:padding="5dp"
+        android:text="增加纵向间距"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#5E42C8"
+        android:id="@+id/reduceVerticalSpace"
+        android:padding="5dp"
+        android:text="减小纵向间距"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#D711E6"
+        android:id="@+id/addView"
+        android:padding="5dp"
+        android:text="添加view"
+        android:textSize="8sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="#97345B"
+        android:id="@+id/clean"
+        android:padding="5dp"
+        android:text="清空"
+        android:textSize="8sp" />
+</com.android.work.widgetmodel.widget.GongGeWidget>

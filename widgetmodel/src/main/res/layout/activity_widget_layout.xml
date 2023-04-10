@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="切换控制台"
+        android:onClick="cutControl"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.android.work.widgetmodel.widget.GongGeWidget
+                    android:id="@+id/gongGe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fffccfff"
+                    app:direction="start"
+                    app:horizontalSpace="10dp"
+                    app:orientation="horizontal"
+                    app:verticalSpace="10dp">
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:background="#ffaacc"
+                        android:text="1" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="20dp"
+                        android:background="#aaddcc"
+                        android:text="2" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:background="#000fff"
+                        android:text="3" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#00FF40"
+                        android:text="4" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:background="#10a040"
+                        android:text="44" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#FFC800"
+                        android:text="5" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#00FF73"
+                        android:text="6" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#FF0077"
+                        android:text="7" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#5454A1"
+                        android:text="8" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#f00fff"
+                        android:text="9" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#99B61A7D"
+                        android:text="10" />
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="20dp"
+                        android:background="#00FFF7"
+                        android:text="11" />
+                </com.android.work.widgetmodel.widget.GongGeWidget>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
