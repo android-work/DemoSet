@@ -74,6 +74,10 @@
 
         <activity android:name="BlueActivity"/>
 
+        <activity android:name=".apt.AptActivity"/>
+
+        <activity android:name="com.android.work.demoset.apt.route.ARouterActivity"/>
+
         <activity android:name=".deep.DeepLinkActivity"
             android:exported="true">
             <!--短链拉起-->

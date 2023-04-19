@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-kapt'
 }
 
-apply from: "test.gradle"
+//apply from: "test.gradle"
 //apply from: "groovy.gradle"
 
 android {
@@ -18,6 +18,17 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+        /*javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }*/
     }
 
 //    sourceSets {
@@ -64,6 +75,15 @@ dependencies {
 
     implementation 'androidx.room:room-runtime:2.3.0'
     kapt 'androidx.room:room-compiler:2.3.0'
+
+    implementation project(path: ':module1')
+    implementation project(path: ':module2')
+
+//    implementation project(path: ':apt-processor')
+    kapt project(path: ':apt-processor')
+    implementation project(path: ':apt-annotation')
+
+    kapt 'com.alibaba:arouter-compiler:1.5.2'
 }
 
 configurations {

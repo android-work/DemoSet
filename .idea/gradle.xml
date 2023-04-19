@@ -13,7 +13,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/aidlmodel" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/apt-annotation" />
+            <option value="$PROJECT_DIR$/apt-processor" />
             <option value="$PROJECT_DIR$/bluetooth" />
+            <option value="$PROJECT_DIR$/module1" />
+            <option value="$PROJECT_DIR$/module2" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/widgetmodel" />
           </set>
