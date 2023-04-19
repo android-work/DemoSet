@@ -32,6 +32,7 @@ dependencyResolutionManagement {
 
     }
 }
+/*
 
 // Initialization Hook
 gradle.settingsEvaluated {
@@ -65,6 +66,7 @@ gradle.projectsEvaluated {
 }
 
 // Execution Hook gradle会在Execution阶段执行task，我们可以通过注册TaskExecutionListener来Hook task的执行;⚠️ 7.3之后被废弃
+*/
 /*gradle.addBuildListener(new TaskExecutionListener(){
 
     @Override
@@ -76,7 +78,8 @@ gradle.projectsEvaluated {
     void afterExecute(Task task, TaskState taskState) {
         println("----gradle afterExecute task:${task.name}  taskState:${taskState.skipMessage}")
     }
-})*/
+})*//*
+
 
 // Execution Hook gradle会在Execution阶段执行task，我们可以通过注册BuildListener来Hook task的执行
 gradle.addListener(new BuildListener() {
@@ -103,9 +106,17 @@ gradle.addListener(new BuildListener() {
     }
 })
 
+*/
+
+
+
 rootProject.name = "DemoSet"
 include ':app'
 include ':aidlmodel'
 include ':widgetmodel'
 include ':network'
 include ':bluetooth'
+include ':module1'
+include ':module2'
+include ':apt-annotation'
+include ':apt-processor'

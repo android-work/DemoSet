@@ -6,8 +6,10 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.android.work.demoset.R
 
+@Route(path = "/app/web")
 class WebActivity:AppCompatActivity() {
 
     lateinit var web:WebView

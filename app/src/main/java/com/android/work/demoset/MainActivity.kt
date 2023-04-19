@@ -7,10 +7,13 @@ import android.os.Looper
 import android.util.Log
 import android.util.SparseArray
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.putAll
 import androidx.recyclerview.widget.RecyclerView
+import com.android.work.apt_annotation.BindView
 import com.android.work.bluetooth.BlueActivity
+import com.android.work.demoset.apt.AptActivity
 import com.android.work.demoset.databases.room.RoomActivity
 import com.android.work.demoset.deep.DeepLinkActivity
 import com.android.work.demoset.design.DesignPatternActivity
@@ -20,6 +23,7 @@ import com.android.work.demoset.permission.PermissionActivity
 import com.android.work.demoset.plc.PLCDemoActivity
 import com.android.work.demoset.provider.ContentProviderTestActivity
 import com.android.work.demoset.result.StartActivity1
+import com.android.work.demoset.apt.route.ARouterActivity
 import com.android.work.demoset.web.WebActivity
 import okhttp3.*
 import java.util.*
@@ -85,6 +89,9 @@ class MainActivity : AppCompatActivity() {
      */
     private val handler = Handler(Looper.myLooper()!!)
 
+    @BindView(R.id.contentProvider)
+    lateinit var contentProvider: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -104,7 +111,6 @@ class MainActivity : AppCompatActivity() {
          *      5、结束xml布局解析后，返回layout，如果inflate传入的root!=null 或 attachParent == true;则会将layout以父布局参数添加到root中；否则直接返回layout
          */
         setContentView(R.layout.activity_main)
-    }
 
         findViewById<RecyclerView>(r.id.rv)
 
@@ -112,8 +118,8 @@ class MainActivity : AppCompatActivity() {
 
         App.v = true
 
-        val okHttpClient = OkHttpClient().newBuilder().readTimeout(1,TimeUnit.MINUTES).writeTimeout(1,TimeUnit.MINUTES).
-        addInterceptor(object: Interceptor{
+        val okHttpClient = OkHttpClient().newBuilder().readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES).addInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
                 val response = chain.proceed(chain.request())
                 // 对response进行处理封装
@@ -136,9 +142,6 @@ class MainActivity : AppCompatActivity() {
         })*/
 
         test()
-
-    fun hotFix(view: android.view.View) {
-        HotFixTest().hotFix()
     }
 
     private fun getH5JumpParams() {
@@ -405,5 +408,15 @@ class MainActivity : AppCompatActivity() {
         HotFixTest().hotFix()
     }
 
+    fun aRoute(view: View) {
+        startActivity(Intent(this, ARouterActivity::class.java))
+    }
+
+    fun aptTest(view: View) {
+        startActivity(Intent(this, AptActivity::class.java))
+    }
+
+
+//    private val t = ThreadPoolExecutor(0,0,0,TimeUnit.MINUTES, ArrayBlockingQueue(2))
 
 }

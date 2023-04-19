@@ -4,15 +4,21 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="内容提供者测试"
-        android:onClick="contentProvider"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="aidl测试"
-        android:onClick="aidlTest"/>
+        <Button
+            android:id="@+id/contentProvider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="contentProvider"
+            android:text="内容提供者测试" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="aidlTest"
+            android:text="aidl测试" />
 
     <Button
         android:layout_width="match_parent"
@@ -54,12 +60,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="蓝牙测试"
-        android:onClick="blueTest"/>
+        android:onClick="blueTest" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="热修复"
-        android:onClick="hotFix"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="hotFix"
+            android:text="热修复" />
 
-</LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="aRoute"
+            android:text="组件跳转" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="aptTest"
+            android:text="apt测试" />
+
+    </LinearLayout>
+</ScrollView>

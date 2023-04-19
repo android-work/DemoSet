@@ -1,5 +1,6 @@
 package com.android.work.demoset.data
 
+
 data class UserInfo(
     val _name: String,
     val _id: Int,
