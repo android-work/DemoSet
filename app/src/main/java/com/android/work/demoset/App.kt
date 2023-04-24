@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.android.work.common.RouteUtil
 import com.android.work.demoset.globle_crash.GlobleTryCache
 import com.android.work.demoset.hook.HookUtil
 import com.android.work.demoset.hot_fix.HotFixUtil
@@ -36,11 +35,9 @@ class App:Application() {
 
         HookUtil.hook()
 
-//        ARouter.init(this)
-//        ARouter.openLog();
-//        ARouter.openDebug()
-
-        RouteUtil.getInstance().init(this)
+        ARouter.init(this)
+        ARouter.openLog();
+        ARouter.openDebug()
 
 //        ProcessorHelper()
     }
