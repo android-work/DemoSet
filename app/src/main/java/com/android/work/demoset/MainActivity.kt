@@ -12,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.putAll
 import androidx.recyclerview.widget.RecyclerView
 import com.android.work.apt_annotation.BindView
+import com.android.work.apt_annotation.CRoute
 import com.android.work.bluetooth.BlueActivity
+import com.android.work.bluetooth.BlueProvider.Companion.mContext
 import com.android.work.demoset.apt.AptActivity
+import com.android.work.demoset.apt.route.ARouterActivity
 import com.android.work.demoset.databases.room.RoomActivity
 import com.android.work.demoset.deep.DeepLinkActivity
 import com.android.work.demoset.design.DesignPatternActivity
@@ -23,14 +26,15 @@ import com.android.work.demoset.permission.PermissionActivity
 import com.android.work.demoset.plc.PLCDemoActivity
 import com.android.work.demoset.provider.ContentProviderTestActivity
 import com.android.work.demoset.result.StartActivity1
-import com.android.work.demoset.apt.route.ARouterActivity
 import com.android.work.demoset.web.WebActivity
+import dalvik.system.DexFile
 import okhttp3.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.android.work.bluetooth.R as r
 
 
+@CRoute(route = "MainActivity")
 class MainActivity : AppCompatActivity() {
 
     /**

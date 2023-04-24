@@ -24,6 +24,8 @@
       <module name="DemoSet.aidlmodel" target="11" />
       <module name="DemoSet.app" target="11" />
       <module name="DemoSet.bluetooth" target="11" />
+      <module name="DemoSet.common" target="11" />
+      <module name="DemoSet.compile_processor" target="11" />
       <module name="DemoSet.module1" target="11" />
       <module name="DemoSet.module2" target="11" />
       <module name="DemoSet.network" target="11" />
