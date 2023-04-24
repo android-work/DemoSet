@@ -1,43 +1,19 @@
 plugins {
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
-
-if (isModule.toBoolean()){
-    apply plugin: 'com.android.library'
-}else {
-    apply plugin: 'com.android.application'
-}
-
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk 32
 
     defaultConfig {
-        if (!isModule.toBoolean()) {
-            applicationId "com.android.work.module2"
-        }
         minSdk 23
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        /*javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }*/
-
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
-
-
 
     buildTypes {
         release {
@@ -59,15 +35,11 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    api 'com.alibaba:arouter-api:1.5.2'
-    kapt 'com.alibaba:arouter-compiler:1.5.2'
-
-//    kapt project(path: ':apt-processor')
-//    implementation project(path: ':apt-annotation')
-    api project(path: ":common")
+    api project(path: ":apt-processor")
+    api project(path: ":apt-annotation")
+    kapt project(path: ":apt-processor")
 }
