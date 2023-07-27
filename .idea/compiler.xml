@@ -29,6 +29,8 @@
       <module name="DemoSet.module1" target="11" />
       <module name="DemoSet.module2" target="11" />
       <module name="DemoSet.network" target="11" />
+      <module name="DemoSet.pluginapp" target="11" />
+      <module name="DemoSet.time_select" target="11" />
       <module name="DemoSet.widgetmodel" target="11" />
     </bytecodeTargetLevel>
   </component>

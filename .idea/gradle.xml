@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/module1" />
             <option value="$PROJECT_DIR$/module2" />
             <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/pluginapp" />
+            <option value="$PROJECT_DIR$/time_select" />
             <option value="$PROJECT_DIR$/widgetmodel" />
           </set>
         </option>

@@ -2,6 +2,7 @@ package com.android.work.network
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.*
@@ -18,7 +19,7 @@ class BaseViewModelFactory(private val application: Application? = null) : ViewM
 
 }
 
-open class BaseViewModel(var context: Application? = null) : ViewModel() {
+open class BaseViewModel(var context: Application? = null) : AndroidViewModel(context!!) {
     private val TAG = "BaseViewModel"
     private val scope = MainScope()
 

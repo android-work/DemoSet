@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.WebViewApp" parent="@style/Theme.Leanback" />
+</resources>

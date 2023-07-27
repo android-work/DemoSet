@@ -1,15 +1,20 @@
 package com.android.work.demoset
 
+import android.app.IntentService
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.content.SharedPreferences
+import android.media.MediaCodec
+import android.os.*
 import android.util.Log
 import android.util.SparseArray
+import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.putAll
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.RecyclerView
 import com.android.work.apt_annotation.BindView
 import com.android.work.apt_annotation.CRoute
@@ -17,9 +22,12 @@ import com.android.work.bluetooth.BlueActivity
 import com.android.work.bluetooth.BlueProvider.Companion.mContext
 import com.android.work.demoset.apt.AptActivity
 import com.android.work.demoset.apt.route.ARouterActivity
+import com.android.work.demoset.databases.DatabaseViewModel
 import com.android.work.demoset.databases.room.RoomActivity
 import com.android.work.demoset.deep.DeepLinkActivity
 import com.android.work.demoset.design.DesignPatternActivity
+import com.android.work.demoset.displayCutout.DisplayCutoutActivity
+import com.android.work.demoset.dynamic_change_skin.ChangeSkinActivity
 import com.android.work.demoset.hook.TestHookActivity
 import com.android.work.demoset.hot_fix.HotFixTest
 import com.android.work.demoset.permission.PermissionActivity
@@ -27,15 +35,23 @@ import com.android.work.demoset.plc.PLCDemoActivity
 import com.android.work.demoset.provider.ContentProviderTestActivity
 import com.android.work.demoset.result.StartActivity1
 import com.android.work.demoset.web.WebActivity
+import com.android.work.network.BaseViewModel
+import dalvik.system.DexClassLoader
 import dalvik.system.DexFile
 import okhttp3.*
+import java.io.IOException
+import java.net.DatagramPacket
 import java.util.*
+import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.Executors
+import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.locks.ReentrantLock
 import com.android.work.bluetooth.R as r
 
 
 @CRoute(route = "MainActivity")
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     /**
      * Handler构造方法：
@@ -93,6 +109,10 @@ class MainActivity : AppCompatActivity() {
      */
     private val handler = Handler(Looper.myLooper()!!)
 
+    private val viewModel by lazy{
+        ViewModelProvider(this).get(BaseViewModel::class.java)
+    }
+
     @BindView(R.id.contentProvider)
     lateinit var contentProvider: Button
 
@@ -122,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
         App.v = true
 
-        val okHttpClient = OkHttpClient().newBuilder().readTimeout(1, TimeUnit.MINUTES)
+        /*val okHttpClient = OkHttpClient().newBuilder().readTimeout(1, TimeUnit.MINUTES)
             .writeTimeout(1, TimeUnit.MINUTES).addInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
                 val response = chain.proceed(chain.request())
@@ -131,7 +151,7 @@ class MainActivity : AppCompatActivity() {
             }
         }).build()
 
-        /*val request = Request.Builder().addHeader("","").method("", RequestBody.create(MediaType.parse(""),"")).url("").build()
+        val request = Request.Builder().addHeader("","").method("", RequestBody.create(MediaType.parse(""),"")).url("").build()
         val call = okHttpClient.newCall(request)
         call?.enqueue(object:Callback{
 
@@ -177,17 +197,21 @@ class MainActivity : AppCompatActivity() {
 
     fun hookBlackWhite(view: View) {
         val intent = Intent(this, TestHookActivity::class.java)
-        intent.putExtra("isHook",false)
+        intent.putExtra("isHook",true)
         startActivity(intent)
     }
 
-    fun roomTest(view: View) = startActivity(Intent(this,RoomActivity::class.java))
+    fun roomTest(view: View) = startActivityFun<RoomActivity>()
 
-    fun activityResult(view: View) = startActivity(Intent(this,StartActivity1::class.java))
+    fun activityResult(view: View) = startActivityFun<StartActivity1>()
 
-    fun permissionRequest(view: View) = startActivity(Intent(this,PermissionActivity::class.java))
+    fun permissionRequest(view: View) = startActivityFun<PermissionActivity>()
 
-    fun web(view: View) = startActivity(Intent(this,WebActivity::class.java))
+    fun web(view: View) = startActivityFun<WebActivity>()
+
+    fun changeSkin(view: View) = startActivityFun<ChangeSkinActivity>()
+
+    fun displayCutout(view: View) = startActivityFun<DisplayCutoutActivity>()
 
     val list = arrayListOf<String>()
     val linkList = LinkedList<String>()
@@ -195,6 +219,7 @@ class MainActivity : AppCompatActivity() {
     val hashMap = hashMapOf<String,String>()
 
     fun test(){
+
         /**
          * 1、构造方法：
          *      ArrayList(): 初始化elementData,为期赋值默认的的空object数组
@@ -379,6 +404,91 @@ class MainActivity : AppCompatActivity() {
         hashMap.put("","")
         hashMap.putAll(hashMap)
         hashMap.remove("")
+
+
+        /**
+         * HandlerThread本身就是一个线程，内部维护了一个handler，目的是对一个线程的复用，避免频繁的创建与销毁
+         * 在线程运行时，构建了子线程的looper对象，并对外暴露
+         * 通过在线程外创建handler使用HandlerThread的looper对象，通过handler来发送消息在子线程中处理任务
+         */
+        val handlerThread = HandlerThread("")
+
+        /**
+         * getSharedPreferences最终获取的是SharedPreferencesImpl对象
+         * sp.edit()最中获取的是SharedPreferencesImpl.EditImpl对象
+         */
+        val sp = getSharedPreferences("",0)
+        val edit = sp.edit()
+        /**
+         * commit：他的写入磁盘的方式是同步的，当多个写入的任务同时存在，则是阻塞当前线程的，直至全部写入完毕，
+         *      在排队写入的enqueueDiskWrite方法中postWriteRunnable为null，导致后面写入的runnable直接在当前线程中执行
+         * apply：他的写入磁盘的方式是异步的，内部通过一个ThreadHandler来实现多任务异步写入
+         *
+         * 注意：
+         *      1、commit与apply相比，频繁大量的写入操作，commit可能会导致ANR
+         *      2、过渡的apply也可能会导致ANR，因为在写入过多任务时，做了页面切换，在ActivityThread中handlePauseActivity、handleStopActivity中先保证
+         *    写入的任务都完成后，再去执行onPause、onStop，也就是存在任务未完成，将这些任务是直接在当前线程中运行，也就可能导致这两个方法执行时间过长，从而导致ANR
+         */
+        edit.commit()
+        edit.apply()
+
+
+        /**
+         * 构造方法：
+         *      参数1：核心线程数
+         *      参数2：最大线程数
+         *      参数3：非核心线程的等待时间
+         *      参数4：等待时间单位
+         *      参数5：任务队列
+         *      参数6：线程工厂
+         *      参数7：拒绝策略
+         *
+         *  execute：将任务放到线程池中执行
+         *      如果 当前运行的线程数 < 核心线程数 直接添加创建一个worker对象，并添加到workers集合中，然后开启线程执行worker
+         *      如果 当前运行的线程数 > 核心线程数 && 当前线程池是运行状态 将任务添加到任务队列中，延迟处理
+         *      如果当前线程不是运行状态，将任务移除队列，在执行拒绝策略
+         *
+         *  Worker：本身也是一个Runnable，包装了内部任务和线程
+         *      核心线程执行任务，直接运行run方法，内部调用runWorker，在runWorker内部开启一个while循环，循环条件就是获取worker内部到runnable
+         *   || getTask()即从任务队列中取，循环体就是task.run()执行任务
+         *      getTask()内部逻辑是开启了一个无限for循环，从任务队列中取任务，再取任务之前需要判断当前线程是否支持等待时间，如果支持则通过poll()
+         *    方法在指定时间阻塞等待任务，如果超时，则会返回null，结束runWorker中的循环，并将当前worker及内部线程销毁；
+         *    没有超时限制则通过take()方法获取，会一直在循环体中take等待任务的到来
+         *
+         *
+         *  submit：内部将runnable包装到RunnableFuture中，并返回Future对象
+         *
+         *  shutdown：内部是将线程池状态变为SHUTDOWN，外部无法在添加新的任务，内部等待剩余任务结束
+         *
+         *  shutdownNow：内部是将线程池变为STOP，外部无法添加新任务，内部直接将所有人全结束
+         *
+         */
+        ThreadPoolExecutor(1,1,1,TimeUnit.MINUTES,ArrayBlockingQueue(20)).execute(Runnable{
+
+        })
+
+
+        /**
+         * Executors内部提供几个快捷注册线程池的静态方法，都是基于ThreadPoolExecutor
+         *
+         *      FixedThreadPool：只有核心线程
+         *      SingleThreadPoolExecutor：只有1个核心线程
+         *      CacheThreadPool：没有核心线程
+         *      SingleThreadScheduleExecutor：只有一个核心线程，且可以支持延迟开启任务，且循环间隔时间执行任务
+         */
+    }
+
+    /**
+     * IntentService本身是一个service，其内部维护了一个HandlerThread及handler
+     * 在onCreate中创建HandlerThread并使用他的looper对象创建了Handler
+     * 在onStart中进行handler发送消息，在Handler的handleMessage中执行抽象方法处理任务，任务逻辑由子类实现
+     * 在任务执行完毕后，执行stopSelf 停止service
+     */
+    class MyIntentService : IntentService(""){
+        override fun onHandleIntent(intent: Intent?) {
+
+        }
+
     }
 
 
@@ -422,5 +532,65 @@ class MainActivity : AppCompatActivity() {
 
 
 //    private val t = ThreadPoolExecutor(0,0,0,TimeUnit.MINUTES, ArrayBlockingQueue(2))
+
+    /**
+     * dex插桩：
+     *     1、通过DexClassLoader加载需要待加载的dex文件
+     *     2、通过反射获取到BaseDexClassLoader，去获取新dexClassLoader中pathList字段
+     *     3、通过pathList反射获取到内部到dexElements数组，dexElements是存放所有dex的
+     *     4、同样需要获取到原类加载器中的dexElements数组，目的用于新老dex数组的合并
+     *     5、创建新的dexElements数组，并合并新老dex数组
+     *     6、重新获取原程序运行的BaseDexClassLoader中的pathList
+     *     7、在从步骤6中的pathList中获取dexElements
+     *     8、将步骤7中获取的dexElements值替换成步骤5的新dexElements
+     *     9、完成了dex热更新
+     */
+
+    /**
+     * 动态加载so：与dex插桩类似
+     *      1、获取当前运行的ClassLoader，并通过反射获取到pathList字段
+     *      2、继续反射获取其内部到nativeLibraryPathElements，nativeLibraryPathElements是存放so的数组
+     *      3、获取需要加载的so路径，并创建到File中添加的集合中
+     *      4、通过反射获执行pathList中的makePathElements，并将需要加载的so的File集合对象传入，得到一个NativeLibraryElement数组
+     *      5、创建一个新的数组，将原nativeLibraryPathElements与新得到的NativeLibraryElement数组合并到新数组中
+     *      6、在替换原nativeLibraryPathElements内容
+     */
+
+    /**
+     * 动态换肤：
+     *      1、需要准备存放图片资源到apk包
+     *      2、通过dexClassLoader加载apk，并通过该classLoader去加载apk 包名.R$drawable(不一定是drawable，可能是color、string)
+     *      3、获取到类字节码后，获取对应资源名的filed(所有资源都在这个类中，直接通过字段名去获取)，并获取其中id
+     *      4、通过反射AssetManager执行addAssetPath方法，参数是apk路径
+     *      5、创建新的Resources，参数使用运行工程中的resources
+     *      6、通过新的Resources和对应获取的资源id，得到其中的drawable对象，拿到drawable就可以设置
+     *
+     */
+
+
+    /**
+     * 事件分发：
+     *      触摸事件，先触发activity的dispatchTouchEvent，内部会将事件传递到window中，window在将事件传递到DecorView中。
+     *      在DecorView又调用了super.dispatchTouchEvent，将事件传递到了ViewGroup。
+     *      在viewGroup中，会去判断当前事件是否禁止拦截，如果不是，就会去调用onInterceptTouchEvent方法，检查是否有被拦截。
+     *      没有被拦截则去view树(viewRootImpl)中寻找下一个获焦的子view。
+     *      将事件传递到view.dispatchTouchEvent中，内部会通过ListenerInfo去消费事件。
+     *      ListenerInfo内部包含了各种相关事件的监听(点击事件、触摸事件等)，ListenerInfo初始化是在事件回调的注册时。
+     *      判断listenerInfo!=null && 注册了OnTouchListener事件 && 执行OnTouchListener.onTouch()是否消费事件。
+     *      上述条件不满足则执行onTouchEvent方法，是否消费事件。
+     *      如果onTouchEvent也未消费事件，则执行preformClick()，如果注册了点击事件，则会从ListenerInfo.OnClickListener.onClick消费事件
+     *
+     *     如果都没消费且再无子view，则会往上走，执行super.dispatchTouchEvent，重复上述从ListenerInfo中获取事件的注册去处理事件。
+     *     如果父类也没有处理，则最终会回到activity的onTouchEvent方法中，最终要么activity 消费事件，要么该事件无效都没处理。
+     *
+     *     由此可见，在事件处理时，OnTouchListener.onTouch()的优先级最高，其次是onTouchEvent()，最后是OnClickListener.onClick()
+     */
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return super.onTouchEvent(event)
+    }
 
 }

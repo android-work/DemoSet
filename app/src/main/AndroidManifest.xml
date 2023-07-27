@@ -72,7 +72,10 @@
 
         <activity android:name=".web.WebActivity" />
 
-        <activity android:name="BlueActivity"/>
+        <activity android:name=".displayCutout.DisplayCutoutActivity"
+            android:theme="@style/a"/>
+
+        <activity android:name=".dynamic_change_skin.ChangeSkinActivity"/>
 
         <activity android:name=".apt.AptActivity"/>
 
@@ -92,6 +95,8 @@
                 <data android:scheme="demoset" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ProxyActivity"/>
 
         <service
             android:name=".plc.messenger.service.MessengerService"

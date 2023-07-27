@@ -28,5 +28,16 @@
         android:background="#BF293F"
         android:padding="10dp"/>
 
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击跳转插件activity，通过hook技术无需插件activity进行清单文件的注册"
+        android:textSize="13sp"
+        android:textColor="#AAC9FF"
+        android:background="#BF293F"
+        android:padding="10dp"
+        android:onClick="hookStartPluginActivity"/>
+
 </LinearLayout>
 
