@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DemoSet</string>
     <string name="hook_hint">我是被hook出来的activity</string>
+    <string name="accessibility_service_label">DemoSet</string>
 </resources>

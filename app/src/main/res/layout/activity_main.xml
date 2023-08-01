@@ -92,5 +92,11 @@
             android:onClick="displayCutout"
             android:text="刘海屏适配"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="accessibility"
+            android:text="无障碍功能"/>
+
     </LinearLayout>
 </ScrollView>

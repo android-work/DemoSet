@@ -5,12 +5,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.media.MediaCodec
 import android.os.*
+import android.provider.Settings
 import android.util.Log
 import android.util.SparseArray
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.putAll
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +22,8 @@ import com.android.work.apt_annotation.BindView
 import com.android.work.apt_annotation.CRoute
 import com.android.work.bluetooth.BlueActivity
 import com.android.work.bluetooth.BlueProvider.Companion.mContext
+import com.android.work.demoset.accessibility.AccessibilityActivity
+import com.android.work.demoset.accessibility.AccessibilityService
 import com.android.work.demoset.apt.AptActivity
 import com.android.work.demoset.apt.route.ARouterActivity
 import com.android.work.demoset.databases.DatabaseViewModel
@@ -36,6 +40,7 @@ import com.android.work.demoset.provider.ContentProviderTestActivity
 import com.android.work.demoset.result.StartActivity1
 import com.android.work.demoset.web.WebActivity
 import com.android.work.network.BaseViewModel
+import com.bumptech.glide.Glide
 import dalvik.system.DexClassLoader
 import dalvik.system.DexFile
 import okhttp3.*
@@ -528,6 +533,10 @@ class MainActivity : BaseActivity() {
 
     fun aptTest(view: View) {
         startActivity(Intent(this, AptActivity::class.java))
+    }
+
+    fun accessibility(view: View) {
+        startActivity(Intent(this, AccessibilityActivity::class.java))
     }
 
 

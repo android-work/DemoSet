@@ -17,6 +17,7 @@
         <entry key="../../../../gradle/caches/transforms-3/418213e2dc50ef16e0b04280e4dc13c0/transformed/appcompat-1.3.0/res/layout/abc_screen_simple_overlay_action_mode.xml" value="0.27355072463768115" />
         <entry key="../../../../gradle/caches/transforms-3/418213e2dc50ef16e0b04280e4dc13c0/transformed/appcompat-1.3.0/res/layout/abc_screen_toolbar.xml" value="0.11979166666666667" />
         <entry key="aidlmodel/src/main/res/layout/server_activity_layout.xml" value="0.21145833333333333" />
+        <entry key="app/src/main/res/layout/activity_accessibility_layout.xml" value="0.21770833333333334" />
         <entry key="app/src/main/res/layout/activity_aidl_layout.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/activity_apt_layout.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/activity_blue_layout.xml" value="0.11684782608695653" />
@@ -35,6 +36,7 @@
         <entry key="app/src/main/res/layout/activity_route_layout.xml" value="0.21145833333333333" />
         <entry key="app/src/main/res/layout/activity_web_layout.xml" value="0.27355072463768115" />
         <entry key="app/src/main/res/layout/item_blue_layout.xml" value="0.13990267639902676" />
+        <entry key="app/src/main/res/xml/accessibility_service.xml" value="0.2328125" />
         <entry key="bluetooth/src/main/res/layout/activity_blue_layout.xml" value="0.2125" />
         <entry key="bluetooth/src/main/res/layout/item_blue_layout.xml" value="0.2125" />
         <entry key="module1/src/main/res/layout/activity_main.xml" value="0.3605072463768116" />

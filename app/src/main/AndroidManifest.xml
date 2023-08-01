@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission  android:name = "android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".App"
@@ -98,6 +100,8 @@
 
         <activity android:name=".ProxyActivity"/>
 
+        <activity android:name=".accessibility.AccessibilityActivity"/>
+
         <service
             android:name=".plc.messenger.service.MessengerService"
             android:exported="true"
@@ -114,6 +118,20 @@
         <!--            android:authorities="com.android.work.demoset.fileProvider"-->
         <!--            android:name="androidx.core.content.FileProvider"/>-->
 
+
+        <service android:name=".accessibility.AccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:label="@string/accessibility_service_label"
+            android:exported="true"
+            tools:ignore="ExtraText">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name = "android.accessibilityservice"
+                android:resource = "@xml/accessibility_service"  />
+        </service>
     </application>
 
 
