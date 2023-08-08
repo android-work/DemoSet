@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="操作步骤"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#EA0C0C"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" 1、先选择需要监听的app\n
+2、点击检测按钮，检查当前app是否开启了无障碍服务\n
+3、如果未开启，会自动跳转到设置页，需要用户手动开启\n
+4、找到 无障碍 -> 在已下载服务中找到当前app名称 ( AutoRob ) -> 开启无障碍服务开关\n
+5、回退页面到需要抢购的app页面中，即可等待系统自动帮你抢\n
+6、抢购结束后，请关闭无障碍服务( 消耗性能，否则会一直实时监测所有页面 )"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择监听的app"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
+        android:onClick="choseAPP"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/ll">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="检测是否开启无障碍服务并开启"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:onClick="checkServer"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="关闭无障碍服务"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:onClick="closeServer"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_marginHorizontal="10dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用前注意事项"
+        android:textColor="#EC0A0A"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1、使用前需要梳理整个购买流程(即：每个页面需要点的按钮文案)\n
+2、请在输入框中输入每一步需要点击的按钮名称，然后点击保存按钮\n
+3、也可以依次输入所有步骤的按钮名称，通过 、分割，点击分割保存按钮\n
+4、点击完保存后会进入页面二，接着按提示操作\n
+5、流程不建议太长，最好是模拟点某个抢购按钮"
+        android:textColor="#000"
+        android:textSize="17sp"/>
+
+    <EditText
+        android:padding="5dp"
+        android:gravity="start"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/edit"
+        android:hint="请输入步骤按钮名称"
+        android:background="@drawable/edit_bg"/>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="save"
+            android:text="保存"/>
+
+        <View
+            android:layout_width="25dp"
+            android:layout_height="1dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="slipSave"
+            android:text="分割保存"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="over"
+        android:text="完成"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clear"
+        android:text="清空"/>
+
+</LinearLayout>
